@@ -1,0 +1,43 @@
+#define sLuz A0
+#define pVerm 9
+#define pVerd 11
+#define pAzul 10
+
+int valorLDR = 0;
+int portaLDR = A0;
+
+void setup()
+{
+  pinMode(sLuz, INPUT);
+  pinMode(pVerm, OUTPUT);
+  pinMode(pVerd, OUTPUT);
+  pinMode(pAzul, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  valorLDR = analogRead(portaLDR);
+  Serial.println(valorLDR);
+
+  // Desliga todos os LEDs primeiro
+  digitalWrite(pVerm, LOW);
+  digitalWrite(pVerd, LOW);
+  digitalWrite(pAzul, LOW);
+//int brilho = map(brilho, 118, 679, 0, 255);
+ // analogWrite(pVerm, brilho);
+  
+  if (valorLDR < 200){
+    // Muita luz
+    digitalWrite(pAzul, HIGH);
+  } else if (valorLDR < 400){
+    // Pouca luz
+    digitalWrite(pVerd, HIGH);
+  } else {
+    // Sem luz
+   digitalWrite(pVerm, HIGH);
+  }
+  
+  delay(100); // Adiciona um atraso para evitar leitura excessiva
+}
